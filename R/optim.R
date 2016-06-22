@@ -8,11 +8,6 @@
 #                                                                  #
 ####################################################################
 
-
-
-#models=GGModels
-#models$init(paste(opt$libpath,"GGM2",sep="/"))
-
 #----------------------- Preprocessing ----------------------------#
 lg = data.frame(matrix(NA,nrow=1,ncol=0))
 
