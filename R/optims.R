@@ -5,11 +5,11 @@ nsga2_optim = function(popsize=0, generations=0)
 		if (generations == 0) { generations = nrow(case$objectives) * 100 }
 		cat("Running NSGA II (",generations,"x",popsize,"): ",sep="")
 		progress.bar(generations+2)
-		ret = nsga2_vec(
+		ret = nsga2(
 			function(x) {
 				ret=case$fun(x);
 				progress.tick();
-				ret
+				t(ret)
 			},
 			idim=nrow(case$parameters),
 			odim=nrow(case$objectives),
@@ -17,7 +17,8 @@ nsga2_optim = function(popsize=0, generations=0)
 			lower.bounds=case$parameters$lower,
 			upper.bounds=case$parameters$upper,
 			popsize=popsize,
-			generations=generations
+			generations=generations,
+			vectorized = TRUE
 		)
 		progress.finish()
 		ret
