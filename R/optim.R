@@ -9,26 +9,6 @@
 ####################################################################
 
 
-#----------------------- Libraries --------------------------------#
-
-library(optparse,quietly = T)
-library(mco,quietly = T)
-#library(DiceKriging,quietly = T)
-library(fields,quietly = T)
-library(lhs,quietly = T)
-
-#----------------------- Options ----------------------------------#
-
-source(paste(opt$libpath,"opt_fun.R",sep="/"))
-source(paste(opt$libpath,"nsga2_vec/mco_vec.R",sep="/"),chdir=T)
-source(paste(opt$libpath,"utils.R",sep="/"))
-source(paste(opt$libpath,"models.R",sep="/"))
-source(paste(opt$libpath,"makemodels.R",sep="/"))
-source(paste(opt$libpath,"sampling.R",sep="/"))
-source(paste(opt$libpath,"gen.new.R",sep="/"))
-source(paste(opt$libpath,"plots.R",sep="/"))
-source(paste(opt$libpath,"optims.R",sep="/"))
-source(paste(opt$libpath,"pareto.R",sep="/"))
 
 #models=GGModels
 #models$init(paste(opt$libpath,"GGM2",sep="/"))
