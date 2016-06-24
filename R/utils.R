@@ -48,14 +48,14 @@ smart_scale = function(n,k,doe) {
 	1 - pnorm(n, mean=pmax(doe*1.7,(doe+k)/2), sd=doe/3)
 }
 
-progress.bar = function() {
+progress.bar = function(n) {
 	progress.len = 1
 	progress.max = 20
 	progress.maxlen = 40
 	progress.ticks = 0
 	clock = "-\\|/"
 	
-	list(
+	ret = list(
 		bar = function(n)
 		{
 			progress.len <<- n
@@ -78,4 +78,6 @@ progress.bar = function() {
 		fail = function() cat("X"),
 		finish = function() cat("#\n")
 	}
+	if (!missing(n)) ret$bar(n)
+	ret
 }	
