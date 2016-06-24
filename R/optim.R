@@ -11,7 +11,7 @@
 #----------------------- Preprocessing ----------------------------#
 lg = data.frame(matrix(NA,nrow=1,ncol=0))
 
-optim.asemoo = function(case, fun, opt=list(), maxiter = 19, models = DiceKrigingModels, sub.optimize=nsga2_optim()) {
+optim.asemoo = function(case, fun, opt=list(), maxiter = 19, models = DiceKrigingModels, sub.optimize=nsga2_optim(), tab = data.frame(design=c())) {
 
 	models$init()
 
@@ -21,7 +21,7 @@ optim.asemoo = function(case, fun, opt=list(), maxiter = 19, models = DiceKrigin
 		rownames(case[[n]]) = case[[n]]$name
 	}
 
-	tab = data.frame(design=c())
+
 
 	#----------------------- newdesign generation ---------------------#
 	comment = "Good"
