@@ -49,7 +49,7 @@ gen.new.parsel = function(tab, case, models, opt, doe.min, sub.optimize=nsga2_op
 	if (ndone >= absolute.min) {
 #		pdf(file=paste(opt$actual,"plots.pdf",sep="/"))
 		for (n.design in 1:opt$count)
-		{ 
+		{
 			newparams = EHVI_sampling(tab=tab, case=case, models=models, opt=opt, sub.optimize=sub.optimize)
 			newparams = data.frame(newparams)
 			newdesign = rbind(newdesign,newparams)

@@ -5,11 +5,11 @@ nsga2_optim = function(popsize=0, generations=0)
 		if (generations == 0) { generations = nrow(case$objectives) * 100 }
 		cat("Running NSGA II (",generations,"x",popsize,"): ",sep="")
 		progress = progress.bar(generations+2)
-		ret = nsga2_vec(
+		ret = nsga2(
 			function(x) {
 				ret=case$fun(x);
 				progress$tick();
-				ret
+				t(ret)
 			},
 			idim=nrow(case$parameters),
 			odim=nrow(case$objectives),
@@ -17,7 +17,8 @@ nsga2_optim = function(popsize=0, generations=0)
 			lower.bounds=case$parameters$lower,
 			upper.bounds=case$parameters$upper,
 			popsize=popsize,
-			generations=generations
+			generations=generations,
+			vectorized = TRUE
 		)
 		progress$finish()
 		ret
@@ -28,18 +29,19 @@ nsga2_optim_full = function(case) {
 	cat("Running NSGA II: ")
 	progress = progress.bar(102)
 	totpop = NULL
-	ret = nsga2_vec(
+	ret = nsga2(
 		function(x) {
 			ret=case$fun(x);
 			totpop <<- rbind(totpop,cbind(x,ret))
 			progress$tick();
-			ret
+			t(ret)
 		},
 		idim=nrow(case$parameters),
 		odim=nrow(case$objectives),
 		cdim=0,
 		lower.bounds=case$parameters$lower,
-		upper.bounds=case$parameters$upper
+		upper.bounds=case$parameters$upper,
+		vectorized = TRUE
 	)
 	progress$finish()
 	tab = data.frame(totpop)
