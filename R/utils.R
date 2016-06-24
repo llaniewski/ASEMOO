@@ -77,7 +77,7 @@ progress.bar = function(n) {
 		},
 		fail = function() cat("X"),
 		finish = function() cat("#\n")
-	}
+	)
 	if (!missing(n)) ret$bar(n)
 	ret
 }	
