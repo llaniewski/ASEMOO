@@ -48,34 +48,36 @@ smart_scale = function(n,k,doe) {
 	1 - pnorm(n, mean=pmax(doe*1.7,(doe+k)/2), sd=doe/3)
 }
 
-
-progress.len = 1
-progress.max = 20
-progress.maxlen = 40
-progress.ticks = 0
-clock = "-\\|/"
-
-progress.bar = function(n)
-{
-	progress.len <<- n
-	progress.max <<- n
-	if (progress.len > progress.maxlen) progress.len <<- progress.maxlen
-	n = progress.len+1
-	progress.ticks <<- 0
-	cat(paste(c("[",rep("-",n),"]",rep("\b",n+1)),collapse=""))
-}
-
-progress.tick = function() {
-	w1 = progress.ticks / progress.max * progress.len
-	progress.ticks <<- progress.ticks + 1
-	w2 = progress.ticks / progress.max * progress.len
-	if ((floor(w1) < floor(w2)) && (w2 <= progress.len)) {
-		 cat("#");
-	} 
-	i = (progress.ticks %% 4) + 1
-	cat(substr(clock, i, i), "\b", sep="")
-}
-progress.fail = function() cat("X");
-
-progress.finish = function() cat("#\n");
-
+progress.bar = function(n) {
+	progress.len = 1
+	progress.max = 20
+	progress.maxlen = 40
+	progress.ticks = 0
+	clock = "-\\|/"
+	
+	ret = list(
+		bar = function(n)
+		{
+			progress.len <<- n
+			progress.max <<- n
+			if (progress.len > progress.maxlen) progress.len <<- progress.maxlen
+			n = progress.len+1
+			progress.ticks <<- 0
+			cat(paste(c("[",rep("-",n),"]",rep("\b",n+1)),collapse=""))
+		},
+		tick = function() {
+			w1 = progress.ticks / progress.max * progress.len
+			progress.ticks <<- progress.ticks + 1
+			w2 = progress.ticks / progress.max * progress.len
+			if ((floor(w1) < floor(w2)) && (w2 <= progress.len)) {
+				 cat("#");
+			} 
+			i = (progress.ticks %% 4) + 1
+			cat(substr(clock, i, i), "\b", sep="")
+		},
+		fail = function() cat("X"),
+		finish = function() cat("#\n")
+	)
+	if (!missing(n)) ret$bar(n)
+	ret
+}	

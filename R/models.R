@@ -18,7 +18,7 @@ name="Kriging model from DiceKriging package"
 		j=0;
 		form = as.formula(paste("~.",paste("I(",names(X),"^2)",sep="",collapse="+"),sep="+"))
 		print(form)
-		progress.bar(30)
+		progress=progress.bar(30)
 		for (i in 1:30) {
 #	                Kr = try(km(~., X, Y, nugget.est=F))
 			f = textConnection("output_dump","w"); sink(f)
@@ -26,7 +26,7 @@ name="Kriging model from DiceKriging package"
 #	                Kr = try(km(~., X, Y, nugget.est=F))
 			sink(); close(f)
 			if (!("try-error" %in% class(Kr))) {
-				progress.tick()
+				progress$tick()
 #				if (all(Kr@covariance@range.val > Kr@lower) & all(Kr@covariance@range.val < Kr@upper)) {
 				if (all(Kr@covariance@range.val > Kr@lower)) {
 					j = j + 1;
@@ -40,10 +40,10 @@ name="Kriging model from DiceKriging package"
 					}
 				}
 			} else {
-				progress.fail()
+				progress$fail()
 			}
 		}
-		progress.finish()
+		progress$finish()
 		if (j == 0) stop("Fitting the model failed (",i,"try)")
 #		nuggets = sapply(Krls, function(Kr) { Kr@covariance@nugget } )
 #		sel=which.min(nuggets)
