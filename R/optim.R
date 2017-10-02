@@ -44,8 +44,9 @@ optim.asemoo = function(case, fun, opt=list(), maxiter = 19, models = DiceKrigin
 			tab = newdesign
 		}
 		sel = apply( is.na(tab[,c(case$objectives$name, case$constraints$name),drop=F] ), 1, any)
+		sel = sel & (tab$state != "done")
 		tab[sel, case$objectives$name] = fun(tab[sel,case$parameters$name,drop=F])
-		tab$state = "done"
+		tab$state[sel] = "done"
 		save(tab, file=paste(opt$actual,paste(opt$casename, "Save", "Rdata", sep="."), sep="/"))
 #		Sys.sleep(5)
 	}
